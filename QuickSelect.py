@@ -1,48 +1,42 @@
 import io,os,sys
- # input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline
-sys.stdin = open("QuickSelect.txt","r")
+input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline
 
-def partition(arr, l, r):
-     
-    x = arr[r]
-    i = l
-    for j in range(l, r):
-         
-        if arr[j] >= x:
-            arr[i], arr[j] = arr[j], arr[i]
+def partition(arr, low, high) : 
+  
+    pivot = arr[high] 
+    i = (low - 1) 
+    for j in range(low, high) : 
+        if arr[j] >= pivot : 
             i += 1
-             
-    arr[i], arr[r] = arr[r], arr[i]
-    return i
- 
-# finds the kth position (of the sorted array)
-# in a given unsorted array i.e this function
-# can be used to find both kth largest and
-# kth smallest element in the array.
-# ASSUMPTION: all elements in arr[] are distinct
-def kthSmallest(arr, l, r, k):
- 
-    # if k is smaller than number of
-    # elements in array
-    if (k > 0 and k <= r - l + 1):
- 
-        # Partition the array around last
-        # element and get position of pivot
-        # element in sorted array
-        index = partition(arr, l, r)
- 
-        # if position is same as k
-        if (index - l == k - 1):
-            return arr[index]
- 
-        # If position is more, recur
-        # for left subarray
-        if (index - l > k - 1):
-            return kthSmallest(arr, l, index - 1, k)
- 
-        # Else recur for right subarray
-        return kthSmallest(arr, index + 1, r,
-                            k - index + l - 1)
+            arr[i], arr[j] = arr[j], arr[i] 
+          
+    arr[i + 1], arr[high] = arr[high], arr[i + 1] 
+    return (i + 1) 
+  
+# Implementation of QuickSelect 
+def kthSmallest(a, left, right, k) : 
+  
+    while left <= right : 
+  
+        # Partition a[left..right] around a pivot 
+        # and find the position of the pivot 
+        pivotIndex = partition(a, left, right) 
+  
+        # If pivot itself is the k-th smallest element 
+        if pivotIndex == k - 1 : 
+            return a[pivotIndex] 
+  
+        # If there are more than k-1 elements on 
+        # left of pivot, then k-th smallest must be 
+        # on left side. 
+        elif pivotIndex > k - 1 :
+            right = pivotIndex - 1
+  
+        # Else k-th smallest is on right side. 
+        else :
+            left = pivotIndex + 1
+      
+    
     
 n, k = map(int,input().split())
 a = []
@@ -51,4 +45,4 @@ for i in range(n):
 # a.sort()
 # print(a[-k])
 print(kthSmallest(a,0,n-1,k))
-# Source Code : https://www.geeksforgeeks.org/quickselect-algorithm/
+# Source Code : hhttps://www.geeksforgeeks.org/quickselect-a-simple-iterative-implementation/
