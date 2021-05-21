@@ -1,5 +1,5 @@
-ABCCED
-ABCE
-SFCS
-ADEE
+BBA
+AA
+BB
+AA
 .
