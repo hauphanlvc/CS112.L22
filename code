@@ -1,0 +1,20 @@
+import io,os,sys
+n = int(input())
+a = []
+for i in range(n):
+    a.append(int(input()))
+def Tinh(b,leftValue,RightValue):
+    if not b :
+        return 0
+    if len(b)==1 : 
+        return b[0]*leftValue*RightValue
+    Max_ = 0
+    for i in range(len(b)):
+        
+        Max_ = max(Max_,Tinh(b[:i],leftValue,b[i])+ Tinh(b[i+1:],b[i],RightValue) + b[i]*RightValue*leftValue)
+    return Max_
+
+Max = 0
+for i in range(0,n):
+    Max = max(Max,Tinh(a[:i],1,a[i])+ Tinh(a[i+1:],a[i],1) + a[i])
+print(Max)
